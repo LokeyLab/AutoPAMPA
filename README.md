@@ -28,10 +28,11 @@ Run the source code using Python from the command line.
 
 ### Requirements:
 
-The easiest way to get the packages required to run *AutoPAMPA* is to install the [Anaconda Python distribution](https://www.anaconda.com/) from Continuum Analytics, then install [peakutils](https://bitbucket.org/lucashnegri/peakutils), [openpyxl](https://bitbucket.org/openpyxl/openpyxl), [statsmodel](http://www.statsmodels.org/stable/index.html), [seaborn](https://seaborn.pydata.org/index.html), and [pymzml](https://github.com/pymzml/pymzML). 
-Use the "conda install package-name" command to install all those packages except peakutils and pymzml.
-Using “pip install package-name” for peakutils and pymzml is the easiest way to add those packages to an Anaconda installation, as they don't exist in the default conda channels.
-The current version of *AutoPAMPA* has been tested with the following versions of the packages mentioned above: Anaconda 4.3.1, openpyxl 2.4.1, peakutils 1.0.3, pymzml 0.7.7, seaborn 0.7.1, and  statsmodels 0.6.1
+*AutoPAMPA* requires [poetry](https://python-poetry.org/) and python3.8 to install. After both are installed, simply clone the repo and create a virtual environment with `poetry env use 3.8` then `poetry install --no-dev`. To access the script, navigate to the repository and enter the virtual environment with `poetry shell`. The `autopampa` command comes set up within the shell. It's easiest to perform all jobs in a subdirectory of the repo (as that's where `poetry shell` automatically pulls the right virtual environment). The suggested (ignored) directory is `.data`
+
+## Updates:
+
+The only behavioral change from the previous AutoPAMPA version is that the config file mzml name fields can also be full file paths.
 
 ## Usage:
 

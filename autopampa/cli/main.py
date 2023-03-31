@@ -1078,7 +1078,7 @@ def singlewellplot(uberplot, xlims, mass, well, numplots, plotnum, usegauss, ver
         color="k",
         marker="D",
         linestyle=" ",
-        markersize=4
+        markersize=4,
     )
     ann = [None] * len(well.ChosenPeaks[mass])
     annheight = []
@@ -1278,7 +1278,7 @@ def scoreprint(outfolder, Parameters, Expt_list, usegauss, graphics):
         integrationdict = collections.defaultdict(
             lambda: {"refint": [], "dint": [], "aint": [], "eint": []}
         )
-        os.makedirs(os.path.join(cwd, f"{outfolder}_{exp.Expt}"),exist_ok=True)
+        os.makedirs(os.path.join(cwd, f"{outfolder}_{exp.Expt}"), exist_ok=True)
         for mass in exp.Targets:
             for p in range(len(RefWell.TotalI[mass])):
                 aintlist = []
@@ -1716,8 +1716,14 @@ def makegraphs(outfolder, Expt_list, usegauss, verbose):
             uberplot.text(
                 0.02, 0.5, "Intensity", va="center", rotation="vertical", size="large"
             )
-            os.makedirs(os.path.join(cwd,f"{outfolder}_{expt.Expt}"),exist_ok=True)
-            uberplot.savefig(os.path.join(cwd, f"{outfolder}_{expt.Expt}", f"Chromatograms for mass {mass}.svg"))
+            os.makedirs(os.path.join(cwd, f"{outfolder}_{expt.Expt}"), exist_ok=True)
+            uberplot.savefig(
+                os.path.join(
+                    cwd,
+                    f"{outfolder}_{expt.Expt}",
+                    f"Chromatograms for mass {mass}.svg",
+                )
+            )
             pyplot.close(uberplot)
 
 

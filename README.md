@@ -154,6 +154,8 @@ Reported statistics include (in order): The reference well file path, the refere
 
 ## Known Bugs and Issues:
 
+If it complains about a missing obo file, grab [psi-ms.obo](https://github.com/HUPO-PSI/psi-ms-CV/blob/master/psi-ms.obo) and put it where the missing file is (rename it to whatever is missing).
+
 Non-linear retention time drift between associated wells causes incorrect peak alignments in parts of the run that align poorly.
 
 Currently there is no feature for baseline correction.

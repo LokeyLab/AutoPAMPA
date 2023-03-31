@@ -367,7 +367,7 @@ def configparse(configfile):
             bad_expt = True
         # Check if all referenced files exist!
         for infile in itertools.chain(job["Ref"], job["Acc"], job["Don"]):
-            if os.path.isfile("{}\\{}".format(os.getcwd(), infile)):
+            if os.path.isfile(os.path.join(os.getcwd(), infile)):
                 continue
             else:
                 print("Warning: Cannot find file {} from Expt {}.".format(infile, expt))
@@ -1278,8 +1278,7 @@ def scoreprint(outfolder, Parameters, Expt_list, usegauss, graphics):
         integrationdict = collections.defaultdict(
             lambda: {"refint": [], "dint": [], "aint": [], "eint": []}
         )
-        if not os.path.isdir("{}\\{}_{}".format(cwd, outfolder, exp.Expt)) and graphics:
-            os.mkdir("{}\\{}_{}".format(cwd, outfolder, exp.Expt))
+        os.makedirs(os.path.join(cwd, f"{outfolder}_{exp.Expt}"),exist_ok=True)
         for mass in exp.Targets:
             for p in range(len(RefWell.TotalI[mass])):
                 aintlist = []
@@ -1635,8 +1634,8 @@ def scoreprint(outfolder, Parameters, Expt_list, usegauss, graphics):
                     compsheet.append(complist)
                     humsheet.append(humlist)
                     rrnum += 1
-    compout.save("{0}\\{1}_Out.xlsx".format(cwd, outfolder))
-    humanout.save("{0}\\{1}_Results.xlsx".format(cwd, outfolder))
+    compout.save(os.path.join(cwd, f"{outfolder}_Out.xlsx"))
+    humanout.save(os.path.join(cwd, f"{outfolder}_Results.xlsx"))
 
 
 def makegraphs(outfolder, Expt_list, usegauss, verbose):
@@ -1717,15 +1716,8 @@ def makegraphs(outfolder, Expt_list, usegauss, verbose):
             uberplot.text(
                 0.02, 0.5, "Intensity", va="center", rotation="vertical", size="large"
             )
-            try:
-                os.mkdir("{}\\{}_{}\\".format(cwd, outfolder, expt.Expt))
-            except OSError:
-                pass
-            uberplot.savefig(
-                "{}\\{}_{}\\Chromatograms for mass {}.svg".format(
-                    cwd, outfolder, expt.Expt, mass
-                )
-            )
+            os.makedirs(os.path.join(cwd,f"{outfolder}_{expt.Expt}"),exist_ok=True)
+            uberplot.savefig(os.path.join(cwd, f"{outfolder}_{expt.Expt}", f"Chromatograms for mass {mass}.svg"))
             pyplot.close(uberplot)
 
 

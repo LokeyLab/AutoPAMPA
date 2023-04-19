@@ -1433,6 +1433,8 @@ def scoreprint(outfolder, Parameters, Expt_list, usegauss, graphics):
                     percentTs = []
                     percentRs = []
                     Pes = []
+                    dlist = []
+                    alist = []
                     for j, both in enumerate(zip(AccWells, DonWells)):
                         a, d = both
                         dint = integrationdict[mass]["dint"][p][j]
@@ -1441,6 +1443,8 @@ def scoreprint(outfolder, Parameters, Expt_list, usegauss, graphics):
                         if dint and dint != 0:
                             if not aint:
                                 aint = 0  # We have the peak in both the ref and the recovery. It's just not permeable.
+                            dlist.append(dint)
+                            alist.append(aint)
                             # Percent T
                             percentT = 100 * (
                                 aint / ((dint * Vd + aint * Va) / (Vd + Va))
@@ -1497,14 +1501,21 @@ def scoreprint(outfolder, Parameters, Expt_list, usegauss, graphics):
                         humlist.append(stdevPe)
                     else:
                         humlist.append(None)
-                    numd = len(integrationdict[mass]["dint"][p])
-                    numa = len(integrationdict[mass]["aint"][p])
-                    if numd == 1 and numa == 1:
+                    if len(dlist) == 0:
                         humlist.extend(
                             [
                                 refint,
-                                integrationdict[mass]["dint"][p][0],
-                                integrationdict[mass]["aint"][p][0],
+                                None,
+                                None,
+                                None,
+                            ]
+                        )
+                    elif len(dlist) == 1:
+                        humlist.extend(
+                            [
+                                refint,
+                                dlist[0],
+                                alist[0],
                                 "{:.2f}, {:.2f}".format(*boundprint),
                             ]
                         )
@@ -1512,12 +1523,11 @@ def scoreprint(outfolder, Parameters, Expt_list, usegauss, graphics):
                         humlist.extend(
                             [
                                 refint,
-                                sum(integrationdict[mass]["dint"][p]) / numd,
-                                sum(integrationdict[mass]["aint"][p]) / numa,
+                                sum(dlist) / len(dlist),
+                                sum(alist) / len(alist),
                                 "{:.2f}, {:.2f}".format(*boundprint),
                             ]
                         )
-                    # humsheet.append(humlist)
                     if graphics:
                         humlist.append(
                             make_link_cell(
